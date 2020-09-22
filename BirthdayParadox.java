@@ -1,21 +1,14 @@
 public class BirthdayParadox {
-    /* Random generator */
     private static java.util.Random generator = new java.util.Random();
-    /* The function runExperiments runs the series of experiments, and
-    stores the result into a Statistics object. The parameter range is the
-    size of the set from which random number are drawn. The parameter
-    numberOfRuns is the number of experiments to run. The function returns
-    a reference to a Statistics instance that holds the result of the
-    experiment (min, max, average, stdev).
-    */
     public static Statistics runExperiments(int range, int numberOfRuns){
 
         Statistics s = new Statistics(numberOfRuns);
-        for(int i = 1; i <= numberOfRuns ; i++)
+        for (int i = 0; i < numberOfRuns ; i++)
         {
-
+            int temp = oneRun(range);
+            s.updateStatistics(temp);
         }
-
+        return s;
     }
     private static int oneRun(int range){
         boolean[] Visited = new boolean[range];
@@ -25,8 +18,8 @@ public class BirthdayParadox {
         {
             Visited[i] = false;
         }
-        int rand = generator.nextInt(range - 1);
         while(true) {
+            int rand = generator.nextInt(range - 1);
             if (!Visited[rand]) {
                 count += 1;
                 Visited[rand] = true;
@@ -37,15 +30,9 @@ public class BirthdayParadox {
         }
         return ret;
     }
-    /* Main method. The default size of the set is 365, and the experiment
-    is run 50 times. Both numbers can be reset from the command line. This
-    method runs the experiments and prints the resulting Statistics. The
-    param args, if not empty, contains the runtime values for the size of
-    the set and the number of runs
-    */
     public static void main(String[] args) {
-        int size ;
-        int runs ;
+        int size =0;
+        int runs =0;
         if (args.length == 0)
         {
             size = 365;
@@ -56,58 +43,58 @@ public class BirthdayParadox {
             size = Integer.parseInt(args[0]);
             runs = Integer.parseInt(args[1]);
         }
+
+        System.out.println(runExperiments(size , runs).toString());
     }
 }
-/**
- * The class Statistics accumulates the results of
- * the experiments. It knows ahead of time how many experiments
- * will be run, and provides at the end the min, the max, the
- * average and the standard deviation for the data.
- *
- * This class should not use classes such as Array,
- * Lists etc. to store the data, only primitive types
- * and java arrays.
- *
- *
- */
-public class Statistics {
-    // ADD HERE INSTANCE VARIABLES DECLARATION
-// The numberOfRuns is the number of experiments that will be run
+
+class Statistics {
+    private int Minimum;
+    private int Maximum;
+    private int [] results;
+    private int sum ;
+    private int count ;
+    private int track;
+
     public Statistics(int numberOfRuns){
-        int Minimum = Integer.MAX_VALUE;
-        int Maximum = 0 ;
-        float Average = 0 ;
-        float StandardDeviation = 0;
+        this.Minimum = Integer.MAX_VALUE;
+        this.Maximum = 0;
+        this.results = new int[numberOfRuns];
+        this.count = numberOfRuns;
+        this.track = 0;
+
     }
-    /* Updates statistics after one experiment. This method cannot be
-    called more times than the parameter that was passed in the
-    constructor. If it is, an error message should be printed and no
-    change should occur. The param value the result returned from a new
-    experiment
-    */
     public void updateStatistics(int value){
-// REPLACE THE BODY OF THIS METHOD WITH YOUR OWN IMPLEMENTATION
+
+        if (value > this.Maximum)
+        {
+            this.Maximum = value;
+        }
+        if (value < this.Minimum)
+        {
+            this.Minimum = value;
+        }
+        this.sum += value;
+        this.results[this.track] = value;
+        this.track++;
     }
-    /* The function returns the current average of the values passed to
-    the method updateStatistic
-    */
+
     public double average(){
-// REPLACE THE BODY OF THIS METHOD WITH YOUR OWN IMPLEMENTATION
+        return this.sum / this.count ;
     }
-    /* The function returns the current standard deviation of the values
-    passed to the method updateStatistic
-    */
+
     public double standardDeviation(){
-// REPLACE THE BODY OF THIS METHOD WITH YOUR OWN IMPLEMENTATION
-    }
-    /* this function returns the complete statistics information:
-    current minimum, maximum, average, and stdev. For the last two, only
-    two digit decimals are printed. The toString function will define how
-    an object will be printed out if you use something like
-    System.out.println(objectName). It simply returns a string back
-    describing the text that will be printed out.
-    */
+        double Sum =0 ;
+        double avg = this.average();
+        for (int i=0 ; i < this.results.length ; i++)
+        {
+            Sum += Math.pow(this.results[i] - avg , 2);
+        }
+        return Math.sqrt(Sum / this.count);
+   }
+
     public String toString(){
-// REPLACE THE BODY OF THIS METHOD WITH YOUR OWN IMPLEMENTATION
+
+      return "Minimum: " + this.Minimum +"\n Maximum: " + this.Maximum +"\n Average: " + String.format("%.2f", this.average()) +"\n Standard Deviation: " + String.format("%.2f" ,this.standardDeviation());
     }
 }
