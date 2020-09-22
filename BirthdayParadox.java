@@ -29,22 +29,29 @@ public class BirthdayParadox {
         }
 
     }
-    public static void main(String[] args) {
-        int size =0;
-        int runs =0;
-        if (args.length == 0)
+    public static void main(String[] args)
+    {
+        int step = 0;
+        int runs = 0;
+        int limit = 0 ;
+        if(args.length == 0)
         {
-            size = 365;
-            runs = 50;
+            step = 100;
+            runs = 1000;
+            limit = 10000;
         }
-        else if (args.length == 2)
+        else if( args.length == 3)
         {
-            size = Integer.parseInt(args[0]);
-            runs = Integer.parseInt(args[1]);
+            step = Integer.parseInt(args[0]);
+            limit = Integer.parseInt(args[1]);
+            runs = Integer.parseInt(args[2]);
         }
-
-        System.out.println(runExperiments(size , runs).toString());
+        for (int size = step ; size <= limit ; size+=step) {
+            System.out.println("Set size:" + size);
+            System.out.println(runExperiments(size, runs).toString());
+        }
     }
+
 }
 
 class Statistics {
@@ -90,10 +97,10 @@ class Statistics {
             Sum += Math.pow(this.results[i] - avg , 2);
         }
         return Math.sqrt(Sum / this.count);
-   }
+    }
 
     public String toString(){
 
-      return "Minimum: " + this.Minimum +"\n Maximum: " + this.Maximum +"\n Average: " + String.format("%.2f", this.average()) +"\n Standard Deviation: " + String.format("%.2f" ,this.standardDeviation());
+        return "Minimum: " + this.Minimum +"\nMaximum: " + this.Maximum +"\nAverage: " + String.format("%.2f", this.average()) +"\nStandard Deviation: " + String.format("%.2f" ,this.standardDeviation());
     }
 }
