@@ -1,4 +1,3 @@
-import  java.util.ArrayList;
 public class BirthdayParadox {
     /* Random generator */
     private static java.util.Random generator = new java.util.Random();
