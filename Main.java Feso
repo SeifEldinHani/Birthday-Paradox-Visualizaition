@@ -46,20 +46,32 @@ Write your code in this editor and press "Run" button to execute it.
 
     public static void main(String[] args)
     {
-        int size = 0;
-        int runs = 0;
+      
         if(args.length == 0)
         {
-            size = 365;
-            runs = 50;
-        }
-        else if( args.length == 2)
+            int size = 100;
+             int runs = 1000;
+             for(int i=100;i<=10000;i=i+100)
         {
-            size = Integer.parseInt(args[0]);
-            runs = Integer.parseInt(args[0]);
+             System.out.println(i);
+             System.out.println(runExperiments(i , runs).toString());
         }
+        }
+        else if( args.length == 3)
+        {
+           int size = Integer.parseInt(args[0]);
+           int max = Integer.parseInt(args[1]);
+           int runs = Integer.parseInt(args[2]);
+
+            for(int i=size;i<=max;i=i+size)
+        {
+             System.out.println(i);
+             System.out.println(runExperiments(i , runs).toString());
+        }
+        }
+       
         
-        System.out.println(runExperiments(size , runs).toString());
+        //System.out.println(runExperiments(size , runs).toString());
     }
 
 }
@@ -117,4 +129,3 @@ Write your code in this editor and press "Run" button to execute it.
         }
     }
     
-   
