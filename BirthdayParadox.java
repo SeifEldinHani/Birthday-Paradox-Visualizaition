@@ -13,7 +13,7 @@ public class BirthdayParadox {
     private static int oneRun(int range){
         boolean[] Visited = new boolean[range];
         int count =0 ;
-        int ret;
+
         for (int i = 0 ; i < range ; i++)
         {
             Visited[i] = false;
@@ -24,11 +24,10 @@ public class BirthdayParadox {
                 count += 1;
                 Visited[rand] = true;
             } else {
-                ret = count;
-                break;
+                return count;
             }
         }
-        return ret;
+
     }
     public static void main(String[] args) {
         int size =0;
