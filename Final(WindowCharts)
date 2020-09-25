@@ -1,5 +1,4 @@
 import java.awt.*;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -43,8 +42,8 @@ public class BirthdayParadox{
     }
     public static void CreateWindow(XYSeriesCollection dataset, XYSeriesCollection dataset1)
     {
-        JFreeChart chart = ChartFactory.createXYLineChart("Average vs Size" , "Size" , "Average" ,dataset, PlotOrientation.VERTICAL, true, true , true);
-        JFreeChart chart1 = ChartFactory.createXYLineChart("Standard Deviation vs Size" , "Size" , "Standard Deviation " ,dataset1, PlotOrientation.VERTICAL, true, true , true);
+        JFreeChart chart = ChartFactory.createXYLineChart("Average vs Size" , "Size" , "Average" ,dataset, PlotOrientation.VERTICAL, true, false, false);
+        JFreeChart chart1 = ChartFactory.createXYLineChart("Standard Deviation vs Size" , "Size" , "Standard Deviation " ,dataset1, PlotOrientation.VERTICAL, true, false, false);
         ChartPanel chartPanel = new ChartPanel( chart );
         ChartPanel chartPane2 = new ChartPanel( chart1 );
 
@@ -56,12 +55,13 @@ public class BirthdayParadox{
         f.getContentPane().add(chartPane2, BorderLayout.EAST);
         f.pack();
         f.setVisible(true);
+        f.setDefaultCloseOperation(3);
 
     }
     public static void main(String[] args)
     {
-        XYSeries AverageChartSeries = new XYSeries("Average");
-        XYSeries DeviationChartSeries = new XYSeries("Deviation");
+        XYSeries AverageChartSeries = new XYSeries("Average Vs Set Size");
+        XYSeries DeviationChartSeries = new XYSeries("Standard Deviation vs Set Size");
         int step = 0;
         int runs = 0;
         int limit = 0 ;
@@ -88,7 +88,7 @@ public class BirthdayParadox{
         XYSeriesCollection dataset1 = new XYSeriesCollection();
         dataset.addSeries(AverageChartSeries);
         dataset1.addSeries(DeviationChartSeries);
-        CreateWindow(dataset, dataset1); 
+        CreateWindow(dataset, dataset1);
 
     }
 
